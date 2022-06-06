@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  --Verylightred: hsl(13, 100%, 72%);
+  --Light-red: hsl(353, 100%, 62%);
+  --Very-dark-gray-blue: hsl(237, 17%, 21%);
+  --Very-dark-desaturated-blue: hsl(237, 23%, 32%);
+  --Very-dark-blue: hsl(208, 49%, 24%);
+  --White: hsl(0, 0%, 100%);
+  --Grayish-blue: hsl(240, 2%, 79%);
+  --Very-dark-grayish-blue: hsl(207, 13%, 34%);
+  --Very-dark-black-blue: hsl(240, 10%, 16%);
+}
+@font-face {
+  font-family: sega;
+  src: url(SEGA.TTF);
+}
+@font-face {
+  font-family: BiggerSummerFest-3zK7Z;
+  src: url(BiggerSummerFest-3zK7Z.ttf);
+}
+@font-face {
+  font-family: Poppins-Medium;
+  src: url(Poppins-Medium.ttf);
+}
+* {
+  font-family: Poppins-Medium;
+  scroll-behavior: smooth;
+}
+.font-sega {
+  font-family: BiggerSummerFest-3zK7Z;
+  font-weight: 900;
+  letter-spacing: 10px;
+}
+h1 {
+  font-family: sega;
+
+  letter-spacing: 10px;
+}
+.textContainer {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.word-wrapper {
+  white-space: nowrap;
+}
+.AppText {
+  text-align: center;
+}
+
+*::-webkit-scrollbar {
+  background-color: transparent !important;
+  width: 10px;
+  margin-right: 2px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #728b4a !important;
+  border-radius: 5px;
+}
+.tab.tab-active {
+  border-color: #5c792e;
+  color: #5c792e !important;
+}
+.exp ul li::before {
+  content: "▹";
+  position: absolute;
+  left: 0px;
+  color: #a3e635;
+}
+.exp ul li {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 10px;
+}
+.hero_vid {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  background: #232a34;
+}
+.heo {
+  background-image: url("../images/images/bg-pattern-circles.svg");
+  height: 10%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 0px 0px 0px 32px;
+}
+.sec2__right {
+  background-image: url("../images/images/bg-pattern-intro-desktop.svg");
+  height: 100%;
+  background-repeat: repeat;
+  background-size: contain;
+}
+.textDb {
+  color: var(--Very-dark-gray-blue);
+}
+.bgDb {
+  background-color: var(--Very-dark-blue);
+}
+/* .sec__phone {
+  background-image: url("../images/images/illustration-phones.svg");
+  height: 550px;
+  background-repeat: no-repeat;
+  width: 500px;
+  position: absolute;
+  background-size: cover;
+
+  top: -120px;
+} */
+@media (max-width: 800px) {
+  .sec__phone {
+    width: 87%;
+    background-size: contain;
+  }
+}
+/* .m__t {
+  margin-top: 10px;
+  background-image: url("../images/images/bg-pattern-circles.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  background-position-y: bottom;
+  background-position-x: right;
+}
+.sec__laptop {
+  background-image: url("../images/images/illustration-laptop-desktop.svg");
+  height: 550px;
+  width: 100%;
+  background-size: cover;
+  padding-right: 237px;
+} */
