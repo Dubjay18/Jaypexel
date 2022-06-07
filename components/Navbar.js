@@ -9,7 +9,7 @@ function Navbar({ searchRef, refScroll }) {
     >
       <div className="navbar-start">
         {/* <div className="dropdown">
-          <label tabindex="0" className="btn btn-ghost btn-circle">
+          <label tabIndex="0" className="btn btn-ghost btn-circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -26,7 +26,7 @@ function Navbar({ searchRef, refScroll }) {
             </svg>
           </label>
           <ul
-            tabindex="0"
+            tabIndex="0"
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
@@ -64,7 +64,7 @@ function Navbar({ searchRef, refScroll }) {
           </button>
         )}
         <div className="dropdown dropdown-end">
-          <label tabindex="0" className="btn btn-ghost btn-circle">
+          <label tabIndex="0" className="btn btn-ghost btn-circle">
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@ function Navbar({ searchRef, refScroll }) {
             </div>
           </label>
           <div
-            tabindex="0"
+            tabIndex="0"
             className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow-lg"
           >
             <div className="card-body bg-base-200">
