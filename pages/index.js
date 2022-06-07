@@ -15,10 +15,10 @@ import Grid2 from "../components/Grid2";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState("images");
+
   const [pics, setPics] = useState([]);
   const [vids, setVids] = useState([]);
-  const [{ darkmode }, dispatch] = useStateValue();
+  const [{ darkmode, tab }, dispatch] = useStateValue();
   const client = createClient(
     "563492ad6f91700001000001fe896f7c8b9947669ce871c99e286682"
   );
@@ -39,7 +39,10 @@ export default function Home() {
     }
   }, [tab]);
   async function changeTab(e) {
-    setTab(e);
+    dispatch({
+      type: "SET_TAB",
+      tab: e,
+    });
   }
   async function AlertDismissible(words, error) {
     if (!error) {

@@ -1,6 +1,15 @@
+import { useRouter } from "next/router";
 import React from "react";
+import { useState } from "react";
 
 function Hero({ tab }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+  const pushSearch = (e) => {
+    e.preventDefault();
+
+    router.push(`/search/${tab}/${searchQuery}`);
+  };
   return (
     <div
       className="hero min-h-[50vh]"
@@ -30,14 +39,16 @@ function Hero({ tab }) {
           </h2>
 
           <div className="flex items-center justify-center ">
-            <div className="form-control ">
+            <form onSubmit={pushSearch} className="form-control ">
               <div className="input-group mx-auto">
                 <input
                   type="text"
-                  placeholder="Not working yet…"
+                  placeholder="Search..."
                   className="input input-bordered input-md md:w-96 text-primary"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button className="btn btn-square">
+                <button className="btn btn-square" type="submit">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -46,15 +57,15 @@ function Hero({ tab }) {
                     stroke="currentColor"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                     />
                   </svg>
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
