@@ -3,7 +3,7 @@ import React from "react";
 function Tabs({ changeTab, tab }) {
   return (
     <div className="flex border-b-2 items-center justify-center py-7">
-      <div className="tabs">
+      <div className="tabs shadow">
         <a
           onClick={() => changeTab("images")}
           className={`tab lg:tab-lg tab-bordered ${

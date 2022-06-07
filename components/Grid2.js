@@ -3,14 +3,31 @@ import { PlayIcon, DownloadIcon } from "@heroicons/react/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import ReactPlayer from "react-player";
 import { Image } from "react-img-placeholder";
-function Grid2({ pics, tab, vids }) {
+import ReactPaginate from "react-paginate";
+import { useStateValue } from "../stateProvider";
+function Grid2({ search, pics, tab, vids }) {
   const [isLoading, setLoading] = useState(true);
+  const [{ page }, dispatch] = useStateValue();
+  const [pageCount, setPageCount] = useState(1);
   const [selectedId, setSelectedId] = useState(null);
   const [selectedVidId, setSelectedVidId] = useState(null);
-
+  const handlePageClick = (event) => {
+    // NProgress.start();
+    // setLoading(true);
+    // const newOffset = (event.selected + 1 * itemsPerPage) % ?.length;
+    dispatch({
+      type: "SET_PAGE",
+      page: event.selected + 1,
+    });
+    // getMovies(event.selected + 1);
+    // console.log(newOffset);
+    // // setItemOffset(newOffset);
+    // NProgress.done();
+    // setLoading(false);
+  };
   return (
     <div
-      className={`md:columns-3 columns-2 gap-1  md:mx-10 mx-1 space-y-3 pb-28 ${
+      className={`md:columns-3 columns-2 gap-2  md:mx-10 mx-1 space-y-3 pb-28 ${
         tab === "images" ? "" : ""
       }`}
     >
@@ -28,9 +45,9 @@ function Grid2({ pics, tab, vids }) {
                   className={`
         hover:opacity-75 duration-700 ease-in-out rounded-lg cursor-pointer
         grayscale-0 blur-0 scale-100`}
-                  placeholderColor="gray"
-                  width={"500px"}
-                  height={"500px"}
+                  placeholderColor={image?.avg_color}
+                  width={image?.width / 3}
+                  height={image?.height / 3}
                   onLoad={() => setLoading(false)}
                   alt=""
                 />
@@ -81,7 +98,7 @@ function Grid2({ pics, tab, vids }) {
               <motion.div className="modal-box relative">
                 <motion.label
                   onClick={() => setSelectedId(null)}
-                  className="btn btn-sm btn-circle absolute right-2 top-2"
+                  className="btn btn-sm btn-circle btn-primary absolute right-2 top-2"
                 >
                   ✕
                 </motion.label>
