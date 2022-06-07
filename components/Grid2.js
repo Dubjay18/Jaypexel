@@ -10,7 +10,7 @@ function Grid2({ pics, tab, vids }) {
 
   return (
     <div
-      className={`md:columns-3 columns-2 gap-1  mx-10 space-y-3 pb-28 ${
+      className={`md:columns-3 columns-2 gap-1  md:mx-10 mx-1 space-y-3 pb-28 ${
         tab === "images" ? "" : ""
       }`}
     >

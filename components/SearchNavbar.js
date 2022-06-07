@@ -12,7 +12,7 @@ function SearchNavbar() {
     router.push(`/search/${tab}/${searchQuery}`);
   };
   return (
-    <div className="navbar py-5 z-50 bg-base-100 shadow sticky top-0">
+    <div className="navbar py-5 z-50 bg-base-100 shadow sticky top-0 flex-wrap">
       <div className="flex-1">
         <div className="bg-primary p-3 rounded-lg flex justify-center items-center">
           <h1 className="text-white ">JP</h1>
