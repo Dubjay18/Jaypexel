@@ -15,13 +15,16 @@ import Grid2 from "../components/Grid2";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-
+  const searchRef = useRef();
   const [pics, setPics] = useState([]);
   const [vids, setVids] = useState([]);
-  const [{ darkmode, tab }, dispatch] = useStateValue();
+  const [{ tab }, dispatch] = useStateValue();
   const client = createClient(
     "563492ad6f91700001000001fe896f7c8b9947669ce871c99e286682"
   );
+  const refScroll = (e) => {
+    e.current?.scrollIntoView({ behaviour: "smooth" });
+  };
   useEffect(() => {
     if (tab === "images") {
       client?.photos
@@ -79,8 +82,8 @@ export default function Home() {
       </Head>
 
       <div className="cus-scroll">
-        <Navbar />
-        <Hero tab={tab} />
+        <Navbar refScroll={refScroll} searchRef={searchRef} />
+        <Hero searchRef={searchRef} tab={tab} />
         <Tabs tab={tab} changeTab={changeTab} />
         <h2 className="flex items-center justify-center my-9 border-b-2 border-secondary">
           Free stock {tab}

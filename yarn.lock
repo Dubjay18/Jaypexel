@@ -915,6 +915,11 @@
   "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"
   "version" "3.2.0"
 
+"react-img-placeholder@^0.1.5":
+  "integrity" "sha512-peXMI1ScTAw09Xm1ck42NeaZbQP97M0NqSoTBlVFKgdNh1x85y0ps0sjEb2RsOwUYzG0FL7x1+/6HOUx9JexiQ=="
+  "resolved" "https://registry.npmjs.org/react-img-placeholder/-/react-img-placeholder-0.1.5.tgz"
+  "version" "0.1.5"
+
 "react-intersection-observer@^9.1.0":
   "integrity" "sha512-XSDWQGzgJ4/B4eW39+qa3S+uc4Gb+m6lxXR54m/uD5lqeL5sLrgYdntbjl4BlTYAblgUhz+JB5obINhZaD+c0Q=="
   "resolved" "https://registry.npmjs.org/react-intersection-observer/-/react-intersection-observer-9.1.0.tgz"

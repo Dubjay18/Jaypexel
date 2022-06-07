@@ -1,15 +1,33 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import { useInView } from "react-intersection-observer";
+import { useStateValue } from "../stateProvider";
 
-function Hero({ tab }) {
+function Hero({ tab, searchRef }) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [{ nav }, dispatch] = useStateValue();
+  const { ref, inView } = useInView();
   const router = useRouter();
   const pushSearch = (e) => {
     e.preventDefault();
 
     router.push(`/search/${tab}/${searchQuery}`);
   };
+  useEffect(() => {
+    if (inView) {
+      dispatch({
+        type: "SET_NAV",
+        nav: true,
+      });
+    }
+    if (!inView) {
+      dispatch({
+        type: "SET_NAV",
+        nav: false,
+      });
+    }
+  }, [inView]);
   return (
     <div
       className="hero min-h-[50vh]"
@@ -32,14 +50,14 @@ function Hero({ tab }) {
       )}
       <div className="hero-overlay bg-opacity-60"></div>
       <div className="hero-content text-center text-neutral-content">
-        <div className="max-w-lg">
+        <div className="max-w-lg" ref={searchRef}>
           <h2 className="mb-5 md:text-5xl font-bold">
             The best free stock photos, royalty free images & videos shared by
             creators.
           </h2>
 
           <div className="flex items-center justify-center ">
-            <form onSubmit={pushSearch} className="form-control ">
+            <form onSubmit={pushSearch} className="form-control " ref={ref}>
               <div className="input-group mx-auto">
                 <input
                   type="text"

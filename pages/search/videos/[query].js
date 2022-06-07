@@ -6,6 +6,7 @@ import { createClient } from "pexels";
 import { useEffect } from "react";
 import SearchNavbar from "../../../components/SearchNavbar";
 import Grid2 from "../../../components/Grid2";
+import PageTransition from "../../../components/PageTransition";
 
 function SearchVideos() {
   const router = useRouter();
@@ -34,17 +35,19 @@ function SearchVideos() {
     });
   }, [query]);
   return (
-    <div data-theme={"garden"}>
-      <SearchNavbar />
-      <div className="mx-10">
-        <h2 className="md:text-4xl flex p-10 my-5 text-primary capitalize">
-          {notFound
-            ? `We couldn’t find anything for ${query}. Try to refine your search.`
-            : `${query} Videos`}
-        </h2>
-        <Grid2 tab={tab} vids={vids} />
+    <PageTransition>
+      <div className={`${notFound && "h-screen"}`} data-theme={"garden"}>
+        <SearchNavbar />
+        <div className="mx-10">
+          <h2 className="md:text-4xl flex p-10 my-5 text-primary capitalize">
+            {notFound
+              ? `We couldn’t find anything for ${query}. Try to refine your search.`
+              : `${query} Videos`}
+          </h2>
+          <Grid2 tab={tab} vids={vids} />
+        </div>
       </div>
-    </div>
+    </PageTransition>
   );
 }
 

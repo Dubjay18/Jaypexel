@@ -31,12 +31,11 @@
 .font-sega {
   font-family: BiggerSummerFest-3zK7Z;
   font-weight: 900;
-  letter-spacing: 10px;
 }
 h1 {
   font-family: sega;
 
-  letter-spacing: 10px;
+  letter-spacing: 2px;
 }
 .textContainer {
   max-width: 960px;

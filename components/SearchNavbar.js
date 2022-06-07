@@ -14,6 +14,9 @@ function SearchNavbar() {
   return (
     <div className="navbar py-5 z-50 bg-base-100 shadow sticky top-0">
       <div className="flex-1">
+        <div className="bg-primary p-3 rounded-lg flex justify-center items-center">
+          <h1 className="text-white ">JP</h1>
+        </div>
         <a
           className="btn btn-ghost normal-case text-xl"
           onClick={() => router.push("/")}
@@ -25,7 +28,7 @@ function SearchNavbar() {
         <form onSubmit={pushSearch} className="form-control ">
           <div className="input-group mx-auto">
             <input
-              type="text"
+              type="search"
               placeholder="Search..."
               className="input input-bordered input-md md:w-96 text-primary"
               value={searchQuery}

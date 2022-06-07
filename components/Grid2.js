@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PlayIcon, DownloadIcon } from "@heroicons/react/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import ReactPlayer from "react-player";
+import { Image } from "react-img-placeholder";
 function Grid2({ pics, tab, vids }) {
   const [isLoading, setLoading] = useState(true);
   const [selectedId, setSelectedId] = useState(null);
@@ -9,7 +10,7 @@ function Grid2({ pics, tab, vids }) {
 
   return (
     <div
-      className={`md:columns-4 columns-2 gap-1  mx-auto space-y-3 pb-28 ${
+      className={`md:columns-3 columns-2 gap-1  mx-10 space-y-3 pb-28 ${
         tab === "images" ? "" : ""
       }`}
     >
@@ -21,16 +22,15 @@ function Grid2({ pics, tab, vids }) {
                 className="bg-gray-200 cursor-pointer break-inside-avoid hover:opacity-75 transition-all duration-500"
                 key={i}
               >
-                <motion.img
-                  onClick={() => setSelectedId(i)}
+                <Image
+                  onClick={() => setSelectedId(i + 1)}
                   src={image?.src?.large}
                   className={`
-        'hover:opacity-75 duration-700 ease-in-out rounded-lg cursor-pointer'
-        ${
-          isLoading
-            ? "grayscale blur-2xl scale-110"
-            : "grayscale-0 blur-0 scale-100"
-        }`}
+        hover:opacity-75 duration-700 ease-in-out rounded-lg cursor-pointer
+        grayscale-0 blur-0 scale-100`}
+                  placeholderColor="gray"
+                  width={"500px"}
+                  height={"500px"}
                   onLoad={() => setLoading(false)}
                   alt=""
                 />
@@ -43,19 +43,20 @@ function Grid2({ pics, tab, vids }) {
                 className="bg-gray-200 cursor-pointer break-inside-avoid hover:opacity-75 transition-all duration-500 relative group"
                 key={i}
               >
-                <PlayIcon className="md:w-14 w-7 group-hover:text-primary z-30 text-white absolute top-[40%]  transition-all duration-500 left-[30%]" />
-                {console.log(vid)}
+                {!isLoading && (
+                  <PlayIcon className="md:w-14 w-7 group-hover:text-primary z-30 text-white absolute top-[40%]  transition-all duration-500 left-[30%]" />
+                )}
 
-                <motion.img
-                  onClick={() => setSelectedVidId(i)}
+                <Image
+                  onClick={() => setSelectedVidId(i + 1)}
                   src={vid?.image}
+                  placeholderColor="gray"
+                  width={"500px"}
+                  height={"500px"}
                   className={`
         'hover:opacity-75 duration-700 ease-in-out rounded-lg cursor-pointer'
-        ${
-          isLoading
-            ? "grayscale blur-2xl scale-110"
-            : "grayscale-0 blur-0 scale-100"
-        }`}
+         grayscale-0 blur-0 scale-100
+        `}
                   onLoad={() => setLoading(false)}
                   alt=""
                 />
@@ -85,7 +86,7 @@ function Grid2({ pics, tab, vids }) {
                   ✕
                 </motion.label>
                 <motion.a
-                  href={pics[selectedId]?.url}
+                  href={pics[selectedId - 1]?.url}
                   target="_blank"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
@@ -94,9 +95,9 @@ function Grid2({ pics, tab, vids }) {
                   <DownloadIcon className="w-7" />
                 </motion.a>
                 <img
-                  src={pics[selectedId]?.src?.large}
-                  height={pics[selectedId]?.height / 5}
-                  width={pics[selectedId]?.width / 5}
+                  src={pics[selectedId - 1]?.src?.large}
+                  height={pics[selectedId - 1]?.height / 5}
+                  width={pics[selectedId - 1]?.width / 5}
                 />
 
                 {console.log(pics[selectedId])}
@@ -126,7 +127,7 @@ function Grid2({ pics, tab, vids }) {
                   ✕
                 </motion.label>
                 <motion.a
-                  href={vids[selectedVidId]?.url}
+                  href={vids[selectedVidId - 1]?.url}
                   target="_blank"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
@@ -136,11 +137,11 @@ function Grid2({ pics, tab, vids }) {
                 </motion.a>
 
                 <ReactPlayer
-                  url={vids[selectedVidId]?.video_files[0]?.link}
+                  url={vids[selectedVidId - 1]?.video_files[0]?.link}
                   controls
                   muted
                   width={"100%"}
-                  light={vids[selectedVidId]?.image}
+                  light={vids[selectedVidId - 1]?.image}
                 />
               </motion.div>
             </motion.div>

@@ -4,6 +4,7 @@ import SearchNavbar from "../../../components/SearchNavbar";
 import { createClient } from "pexels";
 import Grid2 from "../../../components/Grid2";
 import { useStateValue } from "../../../stateProvider";
+import PageTransition from "../../../components/PageTransition";
 function SearchImages() {
   const router = useRouter();
   const [{ darkmode, tab }, dispatch] = useStateValue();
@@ -33,17 +34,19 @@ function SearchImages() {
     });
   }, [query]);
   return (
-    <div className={`${notFound && "h-screen"}`} data-theme={"garden"}>
-      <SearchNavbar />
-      <div className="mx-10">
-        <h2 className="md:text-4xl flex p-10 my-5 text-primary capitalize">
-          {notFound
-            ? `We couldn’t find anything for ${query}. Try to refine your search.`
-            : `${query} Photos`}
-        </h2>
-        <Grid2 tab={tab} pics={pics} />
+    <PageTransition>
+      <div className={`${notFound && "h-screen"}`} data-theme={"garden"}>
+        <SearchNavbar />
+        <div className="mx-10">
+          <h2 className="md:text-4xl flex p-10 my-5 text-primary capitalize">
+            {notFound
+              ? `We couldn’t find anything for ${query}. Try to refine your search.`
+              : `${query} Photos`}
+          </h2>
+          <Grid2 tab={tab} pics={pics} />
+        </div>
       </div>
-    </div>
+    </PageTransition>
   );
 }
 

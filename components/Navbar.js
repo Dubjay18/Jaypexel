@@ -1,10 +1,14 @@
 import React from "react";
+import { useStateValue } from "../stateProvider";
 
-function Navbar() {
+function Navbar({ searchRef, refScroll }) {
+  const [{ nav }] = useStateValue();
   return (
-    <div className="navbar bg-base-100 sticky top-0 z-50">
+    <div
+      className={`navbar bg-base-100 sticky top-0 z-50  ${!nav && "shadow"}`}
+    >
       <div className="navbar-start">
-        <div className="dropdown">
+        {/* <div className="dropdown">
           <label tabindex="0" className="btn btn-ghost btn-circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -29,28 +33,36 @@ function Navbar() {
               <a>nothing yet</a>
             </li>
           </ul>
+        </div> */}
+        <div className="bg-primary p-3 rounded-lg flex justify-center items-center">
+          <h1 className="text-white ">JP</h1>
         </div>
       </div>
       <div className="navbar-center">
         <a className="btn btn-ghost normal-case text-xl">JAYpexel</a>
       </div>
       <div className="navbar-end">
-        {/* <button className="btn btn-ghost btn-circle">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        {!nav && (
+          <button
+            onClick={() => refScroll(searchRef)}
+            className="btn btn-ghost btn-circle"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </button> */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </button>
+        )}
         <div className="dropdown dropdown-end">
           <label tabindex="0" className="btn btn-ghost btn-circle">
             <div className="indicator">
