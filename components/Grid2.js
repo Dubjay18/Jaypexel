@@ -12,18 +12,10 @@ function Grid2({ search, pics, tab, vids }) {
   const [selectedId, setSelectedId] = useState(null);
   const [selectedVidId, setSelectedVidId] = useState(null);
   const handlePageClick = (event) => {
-    // NProgress.start();
-    // setLoading(true);
-    // const newOffset = (event.selected + 1 * itemsPerPage) % ?.length;
     dispatch({
       type: "SET_PAGE",
       page: event.selected + 1,
     });
-    // getMovies(event.selected + 1);
-    // console.log(newOffset);
-    // // setItemOffset(newOffset);
-    // NProgress.done();
-    // setLoading(false);
   };
   return (
     <div
@@ -46,8 +38,8 @@ function Grid2({ search, pics, tab, vids }) {
         hover:opacity-75 duration-700 ease-in-out rounded-lg cursor-pointer
         grayscale-0 blur-0 scale-100`}
                   placeholderColor={image?.avg_color}
-                  width={image?.width / 3}
-                  height={image?.height / 3}
+                  width={"500px"}
+                  height={"500px"}
                   onLoad={() => setLoading(false)}
                   alt=""
                 />
