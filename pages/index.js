@@ -109,7 +109,7 @@ export default function Home() {
           </h2>
           <Grid2 pics={pics} tab={tab} vids={vids} />
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center my-5">
           {tab === "images" && (
             <ReactPaginate
               breakLabel="..."
@@ -122,8 +122,8 @@ export default function Home() {
               className="btn-group "
               previousLinkClassName="btn btn-outline"
               nextLinkClassName="btn btn-outline"
-              activeLinkClassName="btn btn-active bg-primary"
-              pageLinkClassName="btn btn-outline"
+              activeLinkClassName="btn btn-circle btn-active bg-primary"
+              pageLinkClassName="btn btn-circle btn-outline"
               initialPage={page - 1}
             />
           )}
@@ -137,10 +137,10 @@ export default function Home() {
               renderOnZeroPageCount={null}
               previousLabel="< previous"
               className="btn-group "
-              previousLinkClassName="btn btn-outline"
-              nextLinkClassName="btn btn-outline"
-              activeLinkClassName="btn btn-active bg-primary"
-              pageLinkClassName="btn btn-outline"
+              previousLinkClassName="btn  btn-outline"
+              nextLinkClassName="btn  btn-outline"
+              activeLinkClassName="btn btn-circle btn-active bg-primary"
+              pageLinkClassName="btn btn-circle btn-outline"
               initialPage={page - 1}
             />
           )}
