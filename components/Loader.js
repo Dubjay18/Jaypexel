@@ -9,8 +9,8 @@ function Loader() {
   `;
 
   return (
-    <div className="flex items-center justify-center">
-      <div>
+    <div className="w-full flex items-center justify-center">
+      <div className="w-ful">
         <ScaleLoader
           color={"#4B6925"}
           css={override}
