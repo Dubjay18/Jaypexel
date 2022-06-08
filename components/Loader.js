@@ -1,6 +1,6 @@
 import React from "react";
 import { css } from "@emotion/react";
-import ScaleLoader from "react-spinners/scaleLoader";
+import ScaleLoader from "react-spinners/ScaleLoader";
 function Loader() {
   const override = css`
     display: block;
