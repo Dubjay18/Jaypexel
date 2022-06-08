@@ -61,17 +61,7 @@ h1 {
   border-color: #5c792e;
   color: #5c792e !important;
 }
-.exp ul li::before {
-  content: "▹";
-  position: absolute;
-  left: 0px;
-  color: #a3e635;
-}
-.exp ul li {
-  position: relative;
-  padding-left: 30px;
-  margin-bottom: 10px;
-}
+
 .hero_vid {
   width: 100%;
   height: 100%;
@@ -92,41 +82,3 @@ h1 {
   background-repeat: repeat;
   background-size: contain;
 }
-.textDb {
-  color: var(--Very-dark-gray-blue);
-}
-.bgDb {
-  background-color: var(--Very-dark-blue);
-}
-/* .sec__phone {
-  background-image: url("../images/images/illustration-phones.svg");
-  height: 550px;
-  background-repeat: no-repeat;
-  width: 500px;
-  position: absolute;
-  background-size: cover;
-
-  top: -120px;
-} */
-@media (max-width: 800px) {
-  .sec__phone {
-    width: 87%;
-    background-size: contain;
-  }
-}
-/* .m__t {
-  margin-top: 10px;
-  background-image: url("../images/images/bg-pattern-circles.svg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 100%;
-  background-position-y: bottom;
-  background-position-x: right;
-}
-.sec__laptop {
-  background-image: url("../images/images/illustration-laptop-desktop.svg");
-  height: 550px;
-  width: 100%;
-  background-size: cover;
-  padding-right: 237px;
-} */

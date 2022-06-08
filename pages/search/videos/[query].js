@@ -12,11 +12,13 @@ import Footer from "../../../components/Footer";
 
 function SearchVideos() {
   const router = useRouter();
-  const [totalResults, setTotalResults] = useState(0);
-  const [{ darkmode, tab, page }, dispatch] = useStateValue();
-  const [vids, setVids] = useState([]);
   const [notFound, setNotFound] = useState(false);
-  const [pageCount, setPageCount] = useState(1);
+  const [{ darkmode, tab }, dispatch] = useStateValue();
+  const [vids, setVids] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [pageCount, setPageCount] = useState(null);
+  const [totalResults, setTotalResults] = useState(0);
+  const [vidPage, setVidPage] = useState(1);
   const { query } = router.query;
   const client = createClient(
     "563492ad6f91700001000001fe896f7c8b9947669ce871c99e286682"
@@ -27,9 +29,27 @@ function SearchVideos() {
       page: event.selected + 1,
     });
   };
+  const fetchMoreData = () => {
+    if (tab === "videos") {
+      if (vids.length >= totalResults) {
+        setHasMore(false);
+        return;
+      }
+      setVidPage(vidPage + 1);
+      console.log(vidPage, "infinite");
+      client?.videos
+        ?.popular({ page: vidPage + 1, per_page: 20 })
+        .then(async (videos) => {
+          console.log(videos);
+          const newVids = videos?.videos;
+          await setVids((vids) => [...vids, ...newVids]);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
   useEffect(() => {
     client?.videos
-      ?.search({ query, page: page, per_page: 20 })
+      ?.search({ query, page: 1, per_page: 20 })
       .then((videos) => {
         console.log(videos);
         setVids(videos.videos);
@@ -47,7 +67,7 @@ function SearchVideos() {
       type: "SET_TAB",
       tab: "videos",
     });
-  }, [query, page]);
+  }, [query]);
   return (
     <PageTransition>
       <div
@@ -61,9 +81,14 @@ function SearchVideos() {
               ? `We couldn’t find anything for ${query}. Try to refine your search.`
               : `${query} Videos`}
           </h2>
-          <Grid2 search tab={tab} vids={vids} />
+          <Grid2
+            fetchMoreData={fetchMoreData}
+            hasMore={hasMore}
+            tab={tab}
+            vids={vids}
+          />
         </div>
-        {!notFound && (
+        {/* {!notFound && (
           <div className="flex justify-center items-center">
             <ReactPaginate
               breakLabel="..."
@@ -81,7 +106,7 @@ function SearchVideos() {
               initialPage={page - 1}
             />
           </div>
-        )}
+        )} */}
         <Footer />
       </div>
     </PageTransition>

@@ -4,7 +4,7 @@ import { useStateValue } from "../stateProvider";
 
 function SearchNavbar() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [{ darkmode, tab }, dispatch] = useStateValue();
+  const [{ tab }] = useStateValue();
   const router = useRouter();
   const pushSearch = (e) => {
     e.preventDefault();

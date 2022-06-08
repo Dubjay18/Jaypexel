@@ -66,7 +66,7 @@ function Hero({ tab, searchRef }) {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button className="btn btn-square" type="submit">
+                <button className="btn btn-square btn-primary" type="submit">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"

@@ -1,42 +1,72 @@
 import Head from "next/head";
 import { useState, useRef } from "react";
 import { toast } from "react-toastify";
-
 import { useStateValue } from "../stateProvider";
 import headIcon from "../public/vercel.svg";
-import ogIcon from "../svgs/logoj.svg";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Tabs from "../components/Tabs";
 import { createClient } from "pexels";
 import { useEffect } from "react";
-import Grid from "../components/Grid";
 import Grid2 from "../components/Grid2";
 import Footer from "../components/Footer";
-import ReactPaginate from "react-paginate";
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
   const searchRef = useRef();
   const [pics, setPics] = useState([]);
   const [vids, setVids] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
   const [pageCount, setPageCount] = useState(null);
   const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(1);
+  const [vidPage, setVidPage] = useState(1);
   const [{ tab }, dispatch] = useStateValue();
   const client = createClient(
-    "563492ad6f91700001000001fe896f7c8b9947669ce871c99e286682"
+    "563492ad6f917000010000017a8bffa53a184119b151efe49f91edb6"
   );
   const refScroll = (e) => {
     e.current?.scrollIntoView({ behaviour: "smooth" });
   };
-  const handlePageClick = (event) => {
-    setPage(event.selected + 1);
+  const fetchMoreData = () => {
+    if (tab === "images") {
+      if (pics.length >= totalResults) {
+        setHasMore(false);
+        return;
+      }
+      setPage(page + 1);
+      console.log(page, "infinite");
+      client?.photos
+        ?.curated({ page: page + 1, per_page: 20 })
+        .then(async (photos) => {
+          console.log(photos);
+          const newPics = photos.photos;
+          await setPics((pics) => [...pics, ...newPics]);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert(error);
+        });
+    } else {
+      if (vids.length >= totalResults) {
+        setHasMore(false);
+        return;
+      }
+      setVidPage(vidPage + 1);
+      console.log(vidPage, "infinite");
+      client?.videos
+        ?.popular({ page: vidPage + 1, per_page: 20 })
+        .then(async (videos) => {
+          console.log(videos);
+          const newVids = videos?.videos;
+          await setVids((vids) => [...vids, ...newVids]);
+        })
+        .catch((err) => console.log(err));
+    }
   };
   useEffect(async () => {
     if (tab === "images") {
       client?.photos
-        ?.curated({ page: page, per_page: 20 })
+        ?.curated({ page: 1, per_page: 20 })
         .then(async (photos) => {
           console.log(photos);
           await setPics(photos.photos);
@@ -46,7 +76,7 @@ export default function Home() {
         })
         .catch((err) => console.log(err));
     } else {
-      client?.videos?.popular({ page: page, per_page: 20 }).then((videos) => {
+      client?.videos?.popular({ page: 1, per_page: 20 }).then((videos) => {
         console.log(videos);
         setVids(videos.videos);
         setTotalResults(videos?.total_results);
@@ -54,7 +84,7 @@ export default function Home() {
         console.log(pageCount, totalResults);
       });
     }
-  }, [tab, page]);
+  }, [tab]);
 
   async function changeTab(e) {
     dispatch({
@@ -104,46 +134,16 @@ export default function Home() {
         <Hero searchRef={searchRef} tab={tab} />
         <Tabs tab={tab} changeTab={changeTab} />
         <div className="mx-5">
-          <h2 className="md:text-3xl underline dotted flex items-center justify-center my-9 border-b-2 border-secondary">
+          <h2 className="md:text-3xl underline dotted flex items-center justify-center my-9 border-b-2 border-secondary decoration-dashed text-primary">
             Free stock {tab}
           </h2>
-          <Grid2 pics={pics} tab={tab} vids={vids} />
-        </div>
-        <div className="flex justify-center items-center my-5">
-          {tab === "images" && (
-            <ReactPaginate
-              breakLabel="..."
-              nextLabel="next >"
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={5}
-              pageCount={100}
-              renderOnZeroPageCount={null}
-              previousLabel="< previous"
-              className="btn-group "
-              previousLinkClassName="btn btn-outline"
-              nextLinkClassName="btn btn-outline"
-              activeLinkClassName="btn btn-circle btn-active bg-primary"
-              pageLinkClassName="btn btn-circle btn-outline"
-              initialPage={page - 1}
-            />
-          )}
-          {tab === "videos" && (
-            <ReactPaginate
-              breakLabel="..."
-              nextLabel="next >"
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={5}
-              pageCount={100}
-              renderOnZeroPageCount={null}
-              previousLabel="< previous"
-              className="btn-group "
-              previousLinkClassName="btn  btn-outline"
-              nextLinkClassName="btn  btn-outline"
-              activeLinkClassName="btn btn-circle btn-active bg-primary"
-              pageLinkClassName="btn btn-circle btn-outline"
-              initialPage={page - 1}
-            />
-          )}
+          <Grid2
+            pics={pics}
+            tab={tab}
+            vids={vids}
+            fetchMoreData={fetchMoreData}
+            hasMore={hasMore}
+          />
         </div>
 
         <Footer />

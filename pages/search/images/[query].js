@@ -9,11 +9,14 @@ import Footer from "../../../components/Footer";
 import ReactPaginate from "react-paginate";
 function SearchImages() {
   const router = useRouter();
-  const [{ darkmode, tab, page }, dispatch] = useStateValue();
+  const [{ darkmode, tab }, dispatch] = useStateValue();
   const [notFound, setNotFound] = useState(false);
-  const [pageCount, setPageCount] = useState(1);
   const [pics, setPics] = useState([]);
+  const [vids, setVids] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [pageCount, setPageCount] = useState(null);
   const [totalResults, setTotalResults] = useState(0);
+  const [page, setPage] = useState(1);
   const { query } = router.query;
   const client = createClient(
     "563492ad6f91700001000001fe896f7c8b9947669ce871c99e286682"
@@ -24,14 +27,35 @@ function SearchImages() {
       page: event.selected + 1,
     });
   };
+  const fetchMoreData = () => {
+    if (tab === "images") {
+      if (pics.length >= totalResults) {
+        setHasMore(false);
+        return;
+      }
+      setPage(page + 1);
+      console.log(page, "infinite");
+      client?.photos
+        ?.curated({ page: page + 1, per_page: 20 })
+        .then(async (photos) => {
+          console.log(photos);
+          const newPics = photos.photos;
+          await setPics((pics) => [...pics, ...newPics]);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert(err);
+        });
+    }
+  };
   useEffect(() => {
     client?.photos
-      ?.search({ query, page: page, per_page: 20 })
+      ?.search({ query, page: 1, per_page: 20 })
       .then((photos) => {
         console.log(photos);
         setPics(photos.photos);
         setTotalResults(photos?.total_results);
-        setPageCount(Math.ceil(totalResults / photos?.per_page));
+
         if (photos.total_results === 0) {
           setNotFound(true);
         } else {
@@ -44,7 +68,7 @@ function SearchImages() {
       type: "SET_TAB",
       tab: "images",
     });
-  }, [query, page]);
+  }, [query]);
   return (
     <PageTransition>
       <div
@@ -58,9 +82,15 @@ function SearchImages() {
               ? `We couldn’t find anything for ${query}. Try to refine your search.`
               : `${query} Photos`}
           </h2>
-          <Grid2 totalResults={totalResults} search tab={tab} pics={pics} />
+          <Grid2
+            totalResults={totalResults}
+            tab={tab}
+            pics={pics}
+            fetchMoreData={fetchMoreData}
+            hasMore={hasMore}
+          />
         </div>
-        {!notFound && (
+        {/* {!notFound && (
           <div className="flex justify-center items-center">
             <ReactPaginate
               breakLabel="..."
@@ -78,7 +108,7 @@ function SearchImages() {
               initialPage={page - 1}
             />
           </div>
-        )}
+        )} */}
 
         <Footer />
       </div>

@@ -3,75 +3,76 @@ import { PlayIcon, DownloadIcon } from "@heroicons/react/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import ReactPlayer from "react-player";
 import { Image } from "react-img-placeholder";
-import ReactPaginate from "react-paginate";
-import { useStateValue } from "../stateProvider";
-function Grid2({ search, pics, tab, vids }) {
+import Loader from "../components/Loader";
+import InfiniteScroll from "react-infinite-scroll-component";
+function Grid2({ pics, tab, vids, fetchMoreData, hasMore }) {
   const [isLoading, setLoading] = useState(true);
-  const [{ page }, dispatch] = useStateValue();
-  const [pageCount, setPageCount] = useState(1);
+
   const [selectedId, setSelectedId] = useState(null);
   const [selectedVidId, setSelectedVidId] = useState(null);
-  const handlePageClick = (event) => {
-    dispatch({
-      type: "SET_PAGE",
-      page: event.selected + 1,
-    });
-  };
+
   return (
-    <div
-      className={`md:columns-3 columns-2 gap-2  md:mx-10 mx-1 space-y-3 pb-28 ${
-        tab === "images" ? "" : ""
-      }`}
-    >
-      {tab === "images"
-        ? pics?.map((image, i) => (
-            <>
-              {" "}
-              <motion.div
-                className="bg-gray-200 cursor-pointer break-inside-avoid hover:opacity-75 transition-all duration-500"
-                key={i}
-              >
-                <Image
-                  onClick={() => setSelectedId(i + 1)}
-                  src={image?.src?.large}
-                  className={`
+    <div>
+      <InfiniteScroll
+        dataLength={`${tab === "images" ? pics?.length : vids.length}`}
+        next={fetchMoreData}
+        hasMore={hasMore}
+        loader={<Loader />}
+        scrollThreshold="100px"
+        className={`md:columns-3 columns-2 gap-2  md:mx-10 mx-1 space-y-3 pb-28 ${
+          tab === "images" ? "" : ""
+        }`}
+      >
+        {tab === "images"
+          ? pics?.map((image, i) => (
+              <>
+                {" "}
+                <motion.div
+                  className="bg-gray-200 cursor-pointer break-inside-avoid hover:opacity-75 transition-all duration-500"
+                  key={i}
+                >
+                  <Image
+                    onClick={() => setSelectedId(i + 1)}
+                    src={image?.src?.large}
+                    className={`
         hover:opacity-75 duration-700 ease-in-out rounded-lg cursor-pointer
         grayscale-0 blur-0 scale-100`}
-                  placeholderColor={image?.avg_color}
-                  width={"500px"}
-                  height={"500px"}
-                  onLoad={() => setLoading(false)}
-                  alt=""
-                />
-              </motion.div>{" "}
-            </>
-          ))
-        : vids?.map((vid, i) => {
-            return (
-              <div
-                className="bg-gray-200 cursor-pointer break-inside-avoid hover:opacity-75 transition-all duration-500 relative group"
-                key={i}
-              >
-                {!isLoading && (
-                  <PlayIcon className="md:w-14 w-7 group-hover:text-primary z-30 text-white absolute top-[40%]  transition-all duration-500 left-[30%]" />
-                )}
+                    placeholderColor={image?.avg_color}
+                    width={"500px"}
+                    height={"500px"}
+                    onLoad={() => setLoading(false)}
+                    alt=""
+                  />
+                </motion.div>{" "}
+              </>
+            ))
+          : vids?.map((vid, i) => {
+              return (
+                <div
+                  className="bg-gray-200 cursor-pointer break-inside-avoid hover:opacity-75 transition-all duration-500 relative group"
+                  key={i}
+                >
+                  {!isLoading && (
+                    <PlayIcon className="md:w-14 w-7 group-hover:text-primary z-30 text-white absolute top-[40%]  transition-all duration-500 left-[30%]" />
+                  )}
 
-                <Image
-                  onClick={() => setSelectedVidId(i + 1)}
-                  src={vid?.image}
-                  placeholderColor="gray"
-                  width={"500px"}
-                  height={"500px"}
-                  className={`
+                  <Image
+                    onClick={() => setSelectedVidId(i + 1)}
+                    src={vid?.image}
+                    placeholderColor="gray"
+                    width={"500px"}
+                    height={"500px"}
+                    className={`
         'hover:opacity-75 duration-700 ease-in-out rounded-lg cursor-pointer'
          grayscale-0 blur-0 scale-100
         `}
-                  onLoad={() => setLoading(false)}
-                  alt=""
-                />
-              </div>
-            );
-          })}
+                    onLoad={() => setLoading(false)}
+                    alt=""
+                  />
+                </div>
+              );
+            })}
+      </InfiniteScroll>
       <AnimatePresence>
         {selectedId && (
           <motion.div>
