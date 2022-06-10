@@ -79,7 +79,7 @@ function Grid2({ pics, tab, vids, fetchMoreData, hasMore }) {
           </div>
         </InfiniteScroll>
       ) : (
-        "Something went wrong....🤬"
+        <h3 className="text-lg text-error">Something went wrong....🤬</h3>
       )}
 
       <AnimatePresence>

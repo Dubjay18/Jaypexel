@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import Grid2 from "../components/Grid2";
 import Footer from "../components/Footer";
 
-export default function Home() {
+export default function Home({ data, data2 }) {
   const searchRef = useRef();
   const [pics, setPics] = useState([]);
   const [vids, setVids] = useState([]);
@@ -27,6 +27,20 @@ export default function Home() {
   const refScroll = (e) => {
     e.current?.scrollIntoView({ behaviour: "smooth" });
   };
+  const photosData = data;
+  const videosData = data2;
+  useEffect(() => {
+    setPics(photosData?.photos);
+    setVids(videosData?.videos);
+  }, []);
+  useEffect(() => {
+    if (tab === "images") {
+      setTotalResults(photosData?.total_results);
+    } else {
+      setTotalResults(videosData?.total_results);
+    }
+  }, [tab]);
+
   const fetchMoreData = () => {
     if (tab === "images") {
       if (pics.length >= totalResults) {
@@ -63,28 +77,28 @@ export default function Home() {
         .catch((err) => console.log(err));
     }
   };
-  useEffect(async () => {
-    if (tab === "images") {
-      client?.photos
-        ?.curated({ page: 1, per_page: 20 })
-        .then(async (photos) => {
-          console.log(photos);
-          await setPics(photos.photos);
-          setTotalResults(photos?.total_results);
-          await setPageCount(Math.ceil(totalResults / photos?.per_page));
-          console.log(pageCount, totalResults);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      client?.videos?.popular({ page: 1, per_page: 20 }).then((videos) => {
-        console.log(videos);
-        setVids(videos.videos);
-        setTotalResults(videos?.total_results);
-        setPageCount(Math.ceil(totalResults / videos?.per_page));
-        console.log(pageCount, totalResults);
-      });
-    }
-  }, [tab]);
+  // useEffect(async () => {
+  //   if (tab === "images") {
+  //     client?.photos
+  //       ?.curated({ page: 1, per_page: 20 })
+  //       .then(async (photos) => {
+  //         console.log(photos);
+  //         await setPics(photos.photos);
+  //         setTotalResults(photos?.total_results);
+  //         await setPageCount(Math.ceil(totalResults / photos?.per_page));
+  //         console.log(pageCount, totalResults);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   } else {
+  //     client?.videos?.popular({ page: 1, per_page: 20 }).then((videos) => {
+  //       console.log(videos);
+  //       setVids(videos.videos);
+  //       setTotalResults(videos?.total_results);
+  //       setPageCount(Math.ceil(totalResults / videos?.per_page));
+  //       console.log(pageCount, totalResults);
+  //     });
+  //   }
+  // }, [tab]);
 
   async function changeTab(e) {
     dispatch({
@@ -115,6 +129,7 @@ export default function Home() {
       });
     }
   }
+
   return (
     <div
       data-theme={"garden"}
@@ -150,4 +165,18 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps(context) {
+  const client = createClient(
+    "563492ad6f917000010000017a8bffa53a184119b151efe49f91edb6"
+  );
+  const data = await client?.photos?.curated({ page: 1, per_page: 20 });
+  const data2 = await client?.videos?.popular({ page: 1, per_page: 20 });
+  return {
+    props: {
+      data,
+      data2,
+    },
+  };
 }

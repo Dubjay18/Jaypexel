@@ -53,10 +53,10 @@ function SearchImages() {
       ?.search({ query, page: 1, per_page: 20 })
       .then((photos) => {
         console.log(photos);
-        setPics(photos.photos);
+        setPics(photos?.photos);
         setTotalResults(photos?.total_results);
 
-        if (photos.total_results === 0) {
+        if (photos?.total_results === 0) {
           setNotFound(true);
         } else {
           setNotFound(false);
