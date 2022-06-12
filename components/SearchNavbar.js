@@ -4,6 +4,7 @@ import { useStateValue } from "../stateProvider";
 
 function SearchNavbar() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchInput, setSearchInput] = useState(false);
   const [{ tab }] = useStateValue();
   const router = useRouter();
   const pushSearch = (e) => {
@@ -30,7 +31,7 @@ function SearchNavbar() {
             <input
               type="search"
               placeholder="Search..."
-              className="input input-bordered input-md md:w-96 text-primary"
+              className={`input input-bordered  input-md md:w-96 text-primary`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
