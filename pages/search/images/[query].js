@@ -62,7 +62,7 @@ function SearchImages() {
           setNotFound(false);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err, "err"));
 
     dispatch({
       type: "SET_TAB",
