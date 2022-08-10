@@ -30,7 +30,7 @@ function Hero({ tab, searchRef }) {
   }, [inView]);
   return (
     <div
-      className="hero min-h-[50vh]"
+      className="hero min-h-[50vh] relative"
       style={{
         backgroundImage: `${
           tab === "images" && "url(https://api.lorem.space/image?w=1000&h=400)"
@@ -43,12 +43,12 @@ function Hero({ tab, searchRef }) {
           muted
           loop
           poster="https://www.pexels.com/assets/videos/free-videos-7daa2ef41a140f70c757ce91913a4ecb90570b7d7cd2b401bae868350e02c83a.jpg"
-          className="hero_vi"
+          className="hero_vi h-full absolute object-cover   min-h-full min-w-full right-0 brightness-75"
         >
           <source src="https://static.pexels.com/lib/videos/free-videos.mp4" />
         </video>
       )}
-      <div className="hero-overlay bg-opacity-60"></div>
+      <div className="hero-overlay bg-opacity-60 bg-black"></div>
       <div className="hero-content text-center text-neutral-content">
         <div className="max-w-lg" ref={searchRef}>
           <h2 className="mb-5 md:text-5xl font-bold">

@@ -167,7 +167,7 @@ export default function Home({ data, data2 }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const client = createClient(
     "563492ad6f917000010000017a8bffa53a184119b151efe49f91edb6"
   );
